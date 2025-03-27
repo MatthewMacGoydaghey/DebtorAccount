@@ -4,7 +4,7 @@
 stages:
   - deploy
 variables:
-#  GIT_CLONE_PATH: /home/deployer/
+  GIT_CLONE_PATH: /home/deployer/debtor_lk
   CI_BUILDS_DIR: /home/deployer/
   CI_PROJECT_DIR: /home/deployer/
 
