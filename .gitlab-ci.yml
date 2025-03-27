@@ -3,7 +3,8 @@
 #  - docker:dind
 stages:
   - deploy
-#variables:
+variables:
+  GIT_STRATEGY: clone
 #  GIT_CLONE_PATH: /home/deployer/debtor_lk
 #  CI_BUILDS_DIR: /home/deployer/
 #  CI_PROJECT_DIR: /home/deployer/
