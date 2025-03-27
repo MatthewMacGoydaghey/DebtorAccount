@@ -3,15 +3,13 @@
 #  - docker:dind
 stages:
   - deploy
-variables:
-  GIT_CLONE_PATH: /home/deployer/debtor_lk
-  CI_BUILDS_DIR: /home/deployer/
-  CI_PROJECT_DIR: /home/deployer/
+#variables:
+#  GIT_CLONE_PATH: /home/deployer/debtor_lk
+#  CI_BUILDS_DIR: /home/deployer/
+#  CI_PROJECT_DIR: /home/deployer/
 
 step-deploy-develop:
   stage: deploy
-  variables:
-    GIT_CLONE_PATH: /home/deployer/debtor_lk
   script:
 #    - git clone git@lk-gitlab.gkcdu.ru:debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk_backend
 #    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk
