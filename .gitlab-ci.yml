@@ -4,7 +4,7 @@
 stages:
   - deploy
 variables:
-  GIT_CLONE_PATH: /home/deployer/
+#  GIT_CLONE_PATH: /home/deployer/
 #  CI_BUILDS_DIR: /home/deployer/debtor_lk_backend
 
 step-deploy-develop:
