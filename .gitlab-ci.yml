@@ -3,8 +3,8 @@ services:
   - docker:dind
 stages:
   - deploy
-#variables:
-#  GIT_CLONE_PATH: /home/deployer/debtor_lk_backend
+variables:
+  GIT_CLONE_PATH: /home/deployer/
 #  CI_BUILDS_DIR: /home/deployer/debtor_lk_backend
 
 step-deploy-develop:
