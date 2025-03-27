@@ -1,6 +1,6 @@
-image: docker
-services:
-  - docker:dind
+#image: docker
+#services:
+#  - docker:dind
 stages:
   - deploy
 variables:
