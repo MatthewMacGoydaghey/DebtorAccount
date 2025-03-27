@@ -20,6 +20,7 @@ CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisor/supervisord.conf"]
 
 # Copy cronjob setup fro laravel scheduler
 COPY .docker/php-fpm/cron/cron.txt /etc/docker/cron/cron.txt
+COPY .docker/php-fpm/cron/cron.txt /etc/docker/cron/cron.txt1
 
 RUN mkdir -p /var/www/html/storage/framework/cache/data \
     && /usr/bin/crontab -u www-data /etc/docker/cron/cron.txt \
