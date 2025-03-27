@@ -3,9 +3,9 @@
 #  - docker:dind
 stages:
   - deploy
-variables:
-  GIT_STRATEGY: clone
-  GIT_CLEAN_FLAgs: none
+#variables:
+#  GIT_STRATEGY: clone
+#  GIT_CLEAN_FLAgs: none
 #  GIT_CLONE_PATH: /home/deployer/debtor_lk
 #  CI_BUILDS_DIR: /home/deployer/
 #  CI_PROJECT_DIR: /home/deployer/
@@ -22,7 +22,7 @@ step-deploy-develop:
     - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker-compose -f develop.yml up -d
-    - docker exec esia-develop-php composer install
+#    - docker exec esia-develop-php composer install
 #    - docker exec esia-develop-php php artisan key:generate
 #    - docker exec esia-develop-php php artisan migrate --seed
 #    - docker exec esia-develop-php php artisan cache:clear
