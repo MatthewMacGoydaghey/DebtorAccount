@@ -1,0 +1,29 @@
+image: docker
+services:
+  - docker:dind
+stages:
+  - deploy
+
+step-deploy-develop:
+  stage: deploy
+  script:
+    - git clone https:://gitlab-ci-token:${CI_JOB_TOKEN}@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
+    - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
+    - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
+    - docker-compose -f develop.yml up -d
+    - docker exec esia-develop-php composer install
+    - docker exec esia-develop-php php artisan key:generate
+    - docker exec esia-develop-php php artisan migrate --seed
+    - docker exec esia-develop-php php artisan cache:clear
+    - docker exec esia-develop-php php artisan config:cache
+    - docker exec esia-develop-php php artisan route:cache
+    - docker exec esia-develop-php php artisan queue:restart
+  only:
+    - develop
+
+step-deploy-main:
+  stage: deploy
+  script:
+    - docker-compose -f prod-esia.yml up -d
+  only:
+    - main

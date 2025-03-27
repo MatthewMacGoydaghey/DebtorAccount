@@ -8,9 +8,22 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 
-RUN apt-get update && apt-get install nano wget unzip openssl libzip-dev libssl-dev libboost-dev libxml2-dev php-dev libccid pcscd libmotif-common -y \
+RUN apt-get update && apt-get install nano wget unzip cron openssl libzip-dev libssl-dev libboost-dev libxml2-dev php-dev libccid pcscd libmotif-common -y \
     && docker-php-ext-install zip pdo pdo_mysql \
     && curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+
+# Install Supervisor
+RUN apt-get install -y supervisor
+
+CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisor/supervisord.conf"]
+
+# Copy cronjob setup fro laravel scheduler
+COPY .docker/php-fpm/cron/cron.txt /etc/docker/cron/cron.txt
+
+RUN mkdir -p /var/www/html/storage/framework/cache/data \
+    && /usr/bin/crontab -u www-data /etc/docker/cron/cron.txt \
+    && chown -R www-data:www-data /var/www/html/
 
 ## Install GOST-engine for OpenSSL
 ## Instruction: https://github.com/gost-engine/engine/blob/openssl_1_1_1/INSTALL.md
@@ -49,9 +62,12 @@ ADD .docker/php-fpm/csp /tmp/src
 ADD .docker/php-fpm/patch /tmp/src
 ADD .docker/php-fpm/cades /tmp/src/cades
 
-RUN cd /tmp/src/linux-amd64_deb && \
+#RUN cd /tmp/src/linux-amd64_deb && \
+#    ./install.sh lsb-cprocsp-devel cprocsp-pki-cades cprocsp-pki-phpcades
+RUN unzip /tmp/src/linux-amd64_deb.zip -d /tmp/src/linux-amd64_deb && \
+    cd /tmp/src/linux-amd64_deb && \
+    chmod 775 install.sh && \
     ./install.sh lsb-cprocsp-devel cprocsp-pki-cades cprocsp-pki-phpcades
-
 
 #Пакеты для Linux и macOS теперь входят в состав дистрибутива КриптоПро CSP 5.0 R3, их больше не надо скачивать и ставить отдельно.
 #RUN cd /tmp/src && \
@@ -59,24 +75,24 @@ RUN cd /tmp/src/linux-amd64_deb && \
 #    alien -kci cprocsp-pki-cades-64-2.0.14892-1.amd64.rpm && \
 #    alien -kci lsb-cprocsp-devel-5.0.11863-5.noarch.rpm
 
-COPY .docker/php-fpm/cades /opt/cprocsp/src/phpcades/
-RUN cd /bin && \
-    ln -s /opt/cprocsp/bin/amd64/certmgr && \
-    ln -s /opt/cprocsp/bin/amd64/cpverify && \
-    ln -s /opt/cprocsp/bin/amd64/cryptcp && \
-    ln -s /opt/cprocsp/bin/amd64/csptest && \
-    ln -s /opt/cprocsp/bin/amd64/csptestf && \
-    ln -s /opt/cprocsp/bin/amd64/der2xer && \
-    ln -s /opt/cprocsp/bin/amd64/inittst && \
-    ln -s /opt/cprocsp/bin/amd64/wipefile && \
-    ln -s /opt/cprocsp/sbin/amd64/cpconfig && \
-    sed -i "s#PHPDIR=/php#PHPDIR=/usr/include/php/20220829#g" /opt/cprocsp/src/phpcades/Makefile.unix && \
-    cd /opt/cprocsp/src/phpcades && \
-#    patch < /tmp/src/php8_support.patch && \
-    eval `/opt/cprocsp/src/doxygen/CSP/../setenv.sh --64`; make -f Makefile.unix && \
-    mv libphpcades.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829 &&\
-    echo "extension=libphpcades.so" > /usr/local/etc/php/php.ini &&\
-    rm -rf /tmp/src
+#COPY .docker/php-fpm/cades /opt/cprocsp/src/phpcades/
+#RUN cd /bin && \
+#    ln -s /opt/cprocsp/bin/amd64/certmgr && \
+#    ln -s /opt/cprocsp/bin/amd64/cpverify && \
+#    ln -s /opt/cprocsp/bin/amd64/cryptcp && \
+#    ln -s /opt/cprocsp/bin/amd64/csptest && \
+#    ln -s /opt/cprocsp/bin/amd64/csptestf && \
+#    ln -s /opt/cprocsp/bin/amd64/der2xer && \
+#    ln -s /opt/cprocsp/bin/amd64/inittst && \
+#    ln -s /opt/cprocsp/bin/amd64/wipefile && \
+#    ln -s /opt/cprocsp/sbin/amd64/cpconfig && \
+#    sed -i "s#PHPDIR=/php#PHPDIR=/usr/include/php/20220829#g" /opt/cprocsp/src/phpcades/Makefile.unix && \
+#    cd /opt/cprocsp/src/phpcades && \
+##    patch < /tmp/src/php8_support.patch && \
+#    eval `/opt/cprocsp/src/doxygen/CSP/../setenv.sh --64`; make -f Makefile.unix && \
+#    mv libphpcades.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829 &&\
+#    echo "extension=libphpcades.so" > /usr/local/etc/php/php.ini &&\
+#    rm -rf /tmp/src
 
 
 WORKDIR /app
