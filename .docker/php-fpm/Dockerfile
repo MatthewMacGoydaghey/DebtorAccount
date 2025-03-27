@@ -94,5 +94,6 @@ RUN unzip /tmp/src/linux-amd64_deb.zip -d /tmp/src/linux-amd64_deb && \
 #    echo "extension=libphpcades.so" > /usr/local/etc/php/php.ini &&\
 #    rm -rf /tmp/src
 
+COPY ../../app /var/www/html
 
 WORKDIR /app
