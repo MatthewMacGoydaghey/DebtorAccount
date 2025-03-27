@@ -18,17 +18,17 @@ step-deploy-develop:
     - pwd
     - mkdir test
     - tree
-    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
+#    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
     - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker-compose -f develop.yml up -d
     - docker exec esia-develop-php composer install
-    - docker exec esia-develop-php php artisan key:generate
-    - docker exec esia-develop-php php artisan migrate --seed
-    - docker exec esia-develop-php php artisan cache:clear
-    - docker exec esia-develop-php php artisan config:cache
-    - docker exec esia-develop-php php artisan route:cache
-    - docker exec esia-develop-php php artisan queue:restart
+#    - docker exec esia-develop-php php artisan key:generate
+#    - docker exec esia-develop-php php artisan migrate --seed
+#    - docker exec esia-develop-php php artisan cache:clear
+#    - docker exec esia-develop-php php artisan config:cache
+#    - docker exec esia-develop-php php artisan route:cache
+#    - docker exec esia-develop-php php artisan queue:restart
   only:
     - develop
 
