@@ -1,6 +1,6 @@
 services:
 #    nginx:
-#        container_name: esia-main-nginx
+#        container_name: esia-develop-nginx
 #        build:
 #            context: .
 #            dockerfile: .docker/nginx/Dockerfile
@@ -15,7 +15,7 @@ services:
 #            - esia-networks
 
     php:
-        container_name: esia-main-php
+        container_name: esia-develop-php
         build:
             context: .
             dockerfile: .docker/php-fpm/Dockerfile
@@ -28,7 +28,7 @@ services:
             - esia-networks
 
     mariadb:
-        container_name: esia-main-mariadb
+        container_name: esia-develop-mariadb
         build:
             context: .
             dockerfile: .docker/mariadb/Dockerfile
@@ -47,7 +47,7 @@ services:
 
     redis:
         image: redis
-        container_name: esia-main-redis
+        container_name: esia-develop-redis
         volumes:
             - /home/deployer/debtor_lk/backend/docker/redis/data:/data
         networks:
