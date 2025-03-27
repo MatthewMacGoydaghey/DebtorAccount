@@ -4,13 +4,13 @@ services:
 stages:
   - deploy
 variables:
-#    GIT_CLONE_PATH: /home/deployer/debtor_lk_backend
+  GIT_CLONE_PATH: /home/deployer/debtor_lk_backend
   CI_BUILDS_DIR: /home/deployer/debtor_lk_backend
 
 step-deploy-develop:
   stage: deploy
-#  variables:
-#    GIT_CLONE_PATH: /home/deployer/debtor_lk_backend
+  variables:
+    GIT_CLONE_PATH: /home/deployer/debtor_lk_backend
   script:
 #    - git clone git@lk-gitlab.gkcdu.ru:debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk_backend
     - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
