@@ -7,7 +7,7 @@ stages:
 step-deploy-develop:
   stage: deploy
   script:
-    - git clone https://lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
+    - git clone git@lk-gitlab.gkcdu.ru:debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk_backend
     - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker-compose -f develop.yml up -d
