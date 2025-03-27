@@ -3,12 +3,18 @@ services:
   - docker:dind
 stages:
   - deploy
+#variables:
+#  GIT_CLONE_PATH: /home/deployer/debtor_lk_backend
+#  CI_BUILDS_DIR: /home/deployer/debtor_lk_backend
 
 step-deploy-develop:
   stage: deploy
+  variables:
+    GIT_CLONE_PATH: /home/deployer/debtor_lk_backend
   script:
-    - rm -rf /home/deployer/debtor_lk_backend
-    - git clone git@lk-gitlab.gkcdu.ru:debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk_backend
+#    - git clone git@lk-gitlab.gkcdu.ru:debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk_backend
+#    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk
+    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
     - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker-compose -f develop.yml up -d
