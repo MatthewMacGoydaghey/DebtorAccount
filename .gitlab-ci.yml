@@ -4,8 +4,8 @@
 stages:
   - deploy
 variables:
-#  GIT_CLONE_PATH: /home/deployer/debtor_lk
-  CI_BUILDS_DIR: /home/deployer/debtor_lk_backend
+  GIT_CLONE_PATH: /home/deployer/
+#  CI_BUILDS_DIR: /home/deployer/debtor_lk_backend
 
 step-deploy-develop:
   stage: deploy
@@ -16,7 +16,7 @@ step-deploy-develop:
 #    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk
     - pwd
     - mkdir test
-    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
+#    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
     - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker-compose -f develop.yml up -d
