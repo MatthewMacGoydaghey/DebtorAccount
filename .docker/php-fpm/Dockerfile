@@ -95,5 +95,5 @@ RUN unzip /tmp/src/linux-amd64_deb.zip -d /tmp/src/linux-amd64_deb && \
 #    rm -rf /tmp/src
 
 COPY ../../app /var/www/html
-
+COPY ../../.env /var/www/html/.env
 WORKDIR /app
