@@ -1,25 +1,39 @@
-image: docker
-services:
-  - docker:dind
+#image: docker
+#services:
+#  - docker:dind
 stages:
   - deploy
+#variables:
+#  GIT_STRATEGY: clone
+#  GIT_CLEAN_FLAgs: none
+#  GIT_CLONE_PATH: /home/deployer/debtor_lk
+#  CI_BUILDS_DIR: /home/deployer/
+#  CI_PROJECT_DIR: /home/deployer/
 
 step-deploy-develop:
   stage: deploy
   script:
-    - rm -rf /home/deployer/cdu_backend/debtor_lk_backend
-    - git clone git@lk-gitlab.gkcdu.ru:debtor_lk/debtor_lk_backend.git /home/deployer/cdu_backend/debtor_lk_backend
-    - cd /home/deployer/cdu_backend/debtor_lk_backend
-    - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
-    - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
-    - docker-compose -f develop.yml up -d
-    - docker exec esia-develop-php composer install
-    - docker exec esia-develop-php php artisan key:generate
-    - docker exec esia-develop-php php artisan migrate --seed
-    - docker exec esia-develop-php php artisan cache:clear
-    - docker exec esia-develop-php php artisan config:cache
-    - docker exec esia-develop-php php artisan route:cache
-    - docker exec esia-develop-php php artisan queue:restart
+#    - git clone git@lk-gitlab.gkcdu.ru:debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk_backend
+#    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk
+    - pwd
+    - ls -la
+    - tree
+#    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
+#    - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
+#    - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
+    - docker stack rm esia-dev
+#    - docker-compose -f docker-compose.yml down
+    - docker-compose -f docker-compose.yml build
+#    - docker-compose -f docker-compose.yml up -d
+    - docker stack deploy -c docker-compose.yml -d=false esia-dev
+#    - docker-compose -f develop.yml up -d
+#    - docker exec esia-develop-php composer install
+#    - docker exec esia-develop-php php artisan key:generate
+#    - docker exec esia-develop-php php artisan migrate --seed
+#    - docker exec esia-develop-php php artisan cache:clear
+#    - docker exec esia-develop-php php artisan config:cache
+#    - docker exec esia-develop-php php artisan route:cache
+#    - docker exec esia-develop-php php artisan queue:restart
   only:
     - develop
 
