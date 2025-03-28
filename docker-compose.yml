@@ -8,11 +8,15 @@ services:
 #            - "8000:80"
         depends_on:
            - php
+        labels:
+          - traefik.enable=true
+
 #        volumes:
 #            - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
 #            - ./app:/var/www/html
         networks:
-            - esia-networks
+#            - esia-networks
+          - proxy
 
     php:
         container_name: esia-develop-php
