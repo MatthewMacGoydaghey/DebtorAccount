@@ -60,3 +60,6 @@ services:
 networks:
     esia-networks:
         external: true
+    proxy:
+      driver: overlay
+      external: true
