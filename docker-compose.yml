@@ -1,4 +1,4 @@
-    services:
+services:
 #    nginx:
 #        container_name: esia-develop-nginx
 #        build:
@@ -54,7 +54,6 @@
             placement:
                 constraints:
                 - node.role == manager
-
     redis:
         image: redis
         container_name: esia-develop-redis
