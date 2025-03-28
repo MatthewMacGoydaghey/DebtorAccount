@@ -33,9 +33,7 @@ services:
 
     mariadb:
         container_name: esia-develop-mariadb
-        build:
-            context: .
-            dockerfile: .docker/mariadb/Dockerfile
+        image: mariadb-dev
         ports:
             - "3306:3306"
         environment:
