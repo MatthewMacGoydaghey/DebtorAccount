@@ -1,18 +1,18 @@
 services:
-#    nginx:
-#        container_name: esia-develop-nginx
-#        build:
-#            context: .
-#            dockerfile: .docker/nginx/Dockerfile
-#        ports:
-#            - "8000:80"
-#        depends_on:
-#           - php
+    nginx:
+        container_name: esia-develop-nginx
+        build:
+            context: .
+            dockerfile: .docker/nginx/Dockerfile
+        ports:
+            - "8000:80"
+        depends_on:
+           - php
 #        volumes:
 #            - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
 #            - ./app:/var/www/html
-#        networks:
-#            - esia-networks
+        networks:
+            - esia-networks
 
     php:
         container_name: esia-develop-php
