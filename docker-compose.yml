@@ -32,7 +32,7 @@ services:
 #            - esia-networks
 
     mariadb:
-        container_name: esia-develop-mariadb
+#        container_name: esia-develop-mariadb
         image: mariadb-dev
         ports:
             - "3306:3306"
@@ -53,8 +53,8 @@ services:
                 constraints:
                 - node.role == manager
     redis:
-        image: redis
-        container_name: esia-develop-redis
+        image: redis:latest
+#        container_name: esia-develop-redis
         volumes:
             - /home/deployer/debtor_lk/backend/docker/redis/data:/data
         networks:
