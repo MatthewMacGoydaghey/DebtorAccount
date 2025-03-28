@@ -5,7 +5,7 @@ services:
             context: .
             dockerfile: .docker/nginx/Dockerfile
         ports:
-            - "8000:80"
+            - "8001:80"
         depends_on:
             - php
         volumes:
@@ -20,7 +20,7 @@ services:
             context: .
             dockerfile: .docker/php-fpm/Dockerfile
         volumes:
-            - .docker/php/php.ini:/usr/local/etc/php/php.ini
+            - .docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
             - ./app:/var/www/html
             - ./storage:/var/www/html/storage
             - .env:/var/www/html/.env
@@ -52,6 +52,27 @@ services:
             - .docker/redis/data:/data
         networks:
             - esia-networks
+
+    supervisor:
+        container_name: esia-develop-php-supervisor
+        build:
+            context: .
+            dockerfile: .docker/supervisor/Dockerfile
+        volumes:
+            - .docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+            - ./app:/var/www/html
+            - ./storage:/var/www/html/storage
+            - .env:/var/www/html/.env
+        depends_on:
+            php:
+                condition: service_started
+            redis:
+                condition: service_started
+            mariadb:
+                condition: service_started
+        networks:
+            - esia-networks
+        restart: always
 
 networks:
     esia-networks:
