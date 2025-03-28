@@ -22,13 +22,9 @@ step-deploy-develop:
 #    - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
 #    - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker stack rm esia-dev
-    - docker build . -f ./.docker/mariadb/Dockerfile  -t dev-mariadb
+    - docker build . -f ./.docker/mariadb/Dockerfile  -t mariadb-dev
 
-#    - docker-compose -f docker-compose.yml down
-#    - docker-compose -f docker-compose.yml build
-#    - docker-compose -f docker-compose.yml up -d
-
-#    - docker stack deploy -c docker-compose.yml -d=false esia-dev
+    - docker stack deploy -c docker-compose.yml -d=false esia-dev
 
 #    - docker-compose -f develop.yml up -d
 #    - docker exec esia-develop-php composer install
