@@ -18,8 +18,8 @@ services:
 #            - esia-networks
 #          - proxy
 
-#    php:
-#        container_name: esia-develop-php
+    php:
+        image: php-dev
 #        build:
 #            context: .
 #            dockerfile: .docker/php-fpm/Dockerfile
@@ -28,8 +28,8 @@ services:
 #            - ./app:/var/www/html
 #            - ./storage:/var/www/html/storage
 #            - .env:/var/www/html/.env
-#        networks:
-#            - esia-networks
+        networks:
+          - proxy
 
     mariadb:
 #        container_name: esia-develop-mariadb
