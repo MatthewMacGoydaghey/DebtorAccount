@@ -1,5 +1,6 @@
 services:
     nginx:
+        image: php-dev
 #        ports:
 #            - "8000:80"
         depends_on:
