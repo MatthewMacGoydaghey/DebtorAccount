@@ -16,6 +16,9 @@ class AcceptHeaderMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if ($request->is("api/auth/email_verify/*") || $request->is('api/auth/reset_password/*'))
+        $request->headers->set('Accept', 'application/json');
+
         if (!$request->hasHeader('Accept') || $request->header('Accept') !== 'application/json')
         throw new BadRequestHttpException('Accept header должен быть в формате application/json');
 
