@@ -2,7 +2,7 @@ services:
     nginx-dev:
         image: nginx-dev
 #        ports:
-#            - "8000:80"
+#            - "8000:80" 
         depends_on:
            - php
         labels:
