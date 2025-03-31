@@ -33,6 +33,15 @@ step-deploy-develop:
 #    - docker exec esia-develop-php php artisan config:cache
 #    - docker exec esia-develop-php php artisan route:cache
 #    - docker exec esia-develop-php php artisan queue:restart
+
+    - docker exec -it $(docker ps -aqf "ancestor=php-dev"| head -n 1) composer install
+    - docker exec -it $(docker ps -aqf "ancestor=php-dev"| head -n 1) key:generate
+    - docker exec -it $(docker ps -aqf "ancestor=php-dev"| head -n 1) migrate --seed
+    - docker exec -it $(docker ps -aqf "ancestor=php-dev"| head -n 1) cache:clear
+    - docker exec -it $(docker ps -aqf "ancestor=php-dev"| head -n 1) config:cache
+    - docker exec -it $(docker ps -aqf "ancestor=php-dev"| head -n 1) route:cache
+    - docker exec -it $(docker ps -aqf "ancestor=php-dev"| head -n 1) queue:restart
+
   only:
     - develop
 
