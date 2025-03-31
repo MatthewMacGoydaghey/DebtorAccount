@@ -20,7 +20,7 @@ RUN unzip /tmp/src/linux-amd64_deb.zip -d /tmp/src/linux-amd64_deb && \
 
 COPY .docker/php/php.ini /usr/local/etc/php/php.ini
 COPY ./app /var/www/html
-COPY ./storage /var/www/html/storage
+COPY ./app/storage /var/www/html/storage
 COPY .env /var/www/html/.env
 
 WORKDIR /var/www/html
