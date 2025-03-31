@@ -13,17 +13,15 @@ stages:
 step-deploy-develop:
   stage: deploy
   script:
-#    - git clone git@lk-gitlab.gkcdu.ru:debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk_backend
-#    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git /home/deployer/debtor_lk
     - pwd
     - ls -la
     - tree
-#    - git clone https://f.lozhnikov:glpat-VsMs_HNMeTFvwwnASie9@lk-gitlab.gkcdu.ru/debtor_lk/debtor_lk_backend.git
-#    - docker stop $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
-#    - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
+
     - docker stack rm esia-dev
-    - docker build . -f ./.docker/mariadb/Dockerfile  -t mariadb-dev
+
+    - docker build . -f ./.docker/mariadb/Dockerfile -t mariadb-dev
     - docker build . -f .docker/php-fpm/Dockerfile  -t php-dev
+    - docker build . -f .docker/nginx/Dockerfile -t nginx-dev
 
     - docker stack deploy -c docker-compose.yml -d=false esia-dev
 
