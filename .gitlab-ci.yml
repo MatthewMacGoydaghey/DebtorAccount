@@ -23,6 +23,7 @@ step-deploy-develop:
 #    - docker rm $(docker ps -a | grep esia-develop- | awk '{print $1}') || true
     - docker stack rm esia-dev
     - docker build . -f ./.docker/mariadb/Dockerfile  -t mariadb-dev
+    - docker build . -f .docker/php-fpm/Dockerfile  -t php-dev
 
     - docker stack deploy -c docker-compose.yml -d=false esia-dev
 
