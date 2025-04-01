@@ -35,7 +35,7 @@ class AuthController extends Controller
     }
 
 
-    public function GetUserInfo(Request $request)
+    public function GetUserInfo(Request $request): array
     {
         $user = $request->user();
         return ["name" => $user->name, "surname" => $user->surname, "patronymic" => $user->patronymic ?? null];
