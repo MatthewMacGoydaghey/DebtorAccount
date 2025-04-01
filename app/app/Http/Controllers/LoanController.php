@@ -14,13 +14,15 @@ class LoanController extends Controller
 
     public function GetLoans(Request $request): JsonResponse
     {
-        $results = new Filter($request, Loan::query(), ["lender"])->getResult();
+        $filter = new Filter($request, Loan::where('user_id', $request->user()->id), ["lender"]);
+        $results = $filter->apply()->getResult();
         return $this->paginatedResponse($results['total'], $results['filtered'], "loans", LoanResource::collection($results['query']->orderBy('id', 'desc')->get()));
     }
 
     public function GetStatuses(Request $request): JsonResponse
     {
-        $results = new Filter($request, LoanStatuse::query(), ["name"])->getResult();
+        $filter = new Filter($request, LoanStatuse::query(), ["name"]);
+        $results = $filter->apply()->getResult();
         return $this->paginatedResponse($results['total'], $results['filtered'], "loan_statuses", $results['query']->get());
     }
 }

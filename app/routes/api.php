@@ -18,14 +18,14 @@ Route::prefix('/auth')->group(function ()
             Route::get('/', [AuthController::class, 'sendPasswordResetEmail']);
             Route::post('/', [AuthController::class, 'verifyPasswordReset']);
         });
+
+        Route::get("/loans", [LoanController::class, 'GetLoans']);
+        Route::get("/loan_statuses", [LoanController::class, 'GetStatuses']);
     });
     
     Route::prefix('email_verify')->group(function () {
         Route::get('/', [AuthController::class, 'sendEmailVerification']);
         Route::get('/{token}', [AuthController::class, 'verifyEmail']);
     });
-
-    Route::get("/loans", [LoanController::class, 'GetLoans']);
-    Route::get("/loan_statuses", [LoanController::class, 'GetStatuses']);
 });
 

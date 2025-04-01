@@ -28,13 +28,14 @@ class Filter
 
     public function getResult()
     {
-        $recordsFiltered = $this->hasFilters ? $this->query->count() : $this->recordsTotal;
+        if ($this->hasFilters)
+        $recordsFiltered = $this->query->count();
         
         $this->applyPagination();
         
         return [
             'total' => $this->recordsTotal,
-            'filtered' => $recordsFiltered,
+            'filtered' => $recordsFiltered ?? 0,
             'query' => $this->query,
         ];
     }
