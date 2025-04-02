@@ -26,7 +26,7 @@ services:
             - storage-php-dev:/var/www/html/storage
 #            - .env:/var/www/html/.env
         environment:
-            APP_ENV:development
+            APP_ENV: development
         networks:
           - proxy
 
