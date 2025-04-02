@@ -18,7 +18,7 @@ RUN unzip /tmp/src/linux-amd64_deb.zip -d /tmp/src/linux-amd64_deb && \
     chmod 775 install.sh && \
     ./install.sh lsb-cprocsp-devel cprocsp-pki-cades cprocsp-pki-phpcades
 
-COPY .docker/php/php.ini /usr/local/etc/php/php.ini
+#COPY .docker/php/php.ini /usr/local/etc/php/php.ini
 COPY ./app /var/www/html
 
 RUN chown -R www-data:www-data /var/www/
