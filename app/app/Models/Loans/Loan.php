@@ -31,4 +31,9 @@ class Loan extends Model
     {
         return $this->belongsTo(LoanStatuse::class, 'loan_status_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(LoanStatuse::class, 'user_id');
+    }
 }

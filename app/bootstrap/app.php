@@ -35,7 +35,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (Error $e, $request) {
             return response()->json([
                 'status' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
+                "file" => $e->getFile(),
+                "line" => $e->getLine()
             ], 500);
     });
     })->create();

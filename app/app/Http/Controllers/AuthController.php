@@ -11,8 +11,6 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
@@ -37,7 +35,7 @@ class AuthController extends Controller
     }
 
 
-    public function GetUserInfo(Request $request)
+    public function GetUserInfo(Request $request): array
     {
         $user = $request->user();
         return ["name" => $user->name, "surname" => $user->surname, "patronymic" => $user->patronymic ?? null];

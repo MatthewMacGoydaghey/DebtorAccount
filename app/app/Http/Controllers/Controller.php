@@ -21,4 +21,13 @@ abstract class Controller
             'token' => $token
             ]);
     }
+
+    protected function paginatedResponse(int $total, int $filtered, string $name, $result) {
+        return response()->json([
+            'records_total' => $total,
+            'records_filtered' => $filtered,
+            $name => $result
+        ]);
+    }
+
 }

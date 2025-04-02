@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Mail\EmailVerification;
 use App\Mail\PasswordVerification;
+use App\Models\Loans\Loan;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -61,6 +62,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function loan()
+    {
+        return $this->hasOne(Loan::class);
     }
 
 
