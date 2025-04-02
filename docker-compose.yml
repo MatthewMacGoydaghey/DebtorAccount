@@ -26,15 +26,7 @@ services:
             - storage-php-dev:/var/www/html/storage
 #            - .env:/var/www/html/.env
         environment:
-            MAIL_MAILER: log
-            MAIL_SCHEME: null
-            MAIL_HOST: mail.gkcdu.ru
-            MAIL_PORT: 587
-            MAIL_ENCRYPTION: tls
-            MAIL_USERNAME: noreply
-            MAIL_PASSWORD: s2fvLWxkCLkR
-            MAIL_FROM_ADDRESS: "noreply@gkcdu.ru"
-            MAIL_FROM_NAME: "${APP_NAME}"
+            APP_ENV: .env
         networks:
           - proxy
 
