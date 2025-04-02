@@ -23,4 +23,6 @@ COPY ./app /var/www/html
 COPY ./app/storage /var/www/html/storage
 COPY .env /var/www/html/.env
 
+RUN chown -R www-data:www-data /var/www
+
 WORKDIR /var/www/html
