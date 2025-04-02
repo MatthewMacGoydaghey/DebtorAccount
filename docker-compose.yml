@@ -26,14 +26,14 @@ services:
 #            - ./storage:/var/www/html/storage
 #            - .env:/var/www/html/.env
         environment:
-            MAIL_MAILER=log
-            MAIL_SCHEME=null
-            MAIL_HOST=192.168.152.6
-            MAIL_PORT=25
-            MAIL_USERNAME=null
-            MAIL_PASSWORD=null
-            MAIL_FROM_ADDRESS="noreply@gkcdu.ru"
-            MAIL_FROM_NAME="${APP_NAME}"
+            MAIL_MAILER: log
+            MAIL_SCHEME: null
+            MAIL_HOST: 192.168.152.6
+            MAIL_POR: 25
+            MAIL_USERNAME: null
+            MAIL_PASSWORD: null
+            MAIL_FROM_ADDRESS: "noreply@gkcdu.ru"
+            MAIL_FROM_NAME: "${APP_NAME}"
         networks:
           - proxy
 
