@@ -1,6 +1,6 @@
 FROM php:8.2-fpm-bookworm
 
-RUN apt-get update && apt-get install nano wget unzip cron curl openssl libzip-dev libccid pcscd -y \
+RUN apt-get update && apt-get install nano wget unzip cron curl openssl libzip-dev libccid pcscd iputils-ping -y \
     && docker-php-ext-install zip pdo pdo_mysql \
     && curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
