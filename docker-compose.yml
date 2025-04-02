@@ -25,8 +25,8 @@ services:
 #            - ./app:/var/www/html
             - storage-php-dev:/var/www/html/storage
 #            - /home/deployer/debtor_lk/backend/.env:/var/www/html/.env
-        environment:
-            APP_ENV: development
+#        environment:
+#            APP_ENV: development
         networks:
           - proxy
 
