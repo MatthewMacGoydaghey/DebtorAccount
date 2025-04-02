@@ -17,6 +17,8 @@ services:
 
     php-dev:
         image: php-dev
+        ports:
+            - "8000:8000" 
 #        build:
 #            context: .
 #            dockerfile: .docker/php-fpm/Dockerfile
