@@ -24,5 +24,6 @@ COPY ./app/storage /var/www/html/storage
 COPY .env /var/www/html/.env
 
 RUN chown -R www-data:www-data /var/www
+RUN chmod -R 755 /var/www/storage
 
 WORKDIR /var/www/html
