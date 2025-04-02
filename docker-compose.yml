@@ -20,18 +20,18 @@ services:
 #        build:
 #            context: .
 #            dockerfile: .docker/php-fpm/Dockerfile
-#        volumes:
+        volumes:
 #            - .docker/php/php.ini:/usr/local/etc/php/php.ini
 #            - ./app:/var/www/html
-#            - ./storage:/var/www/html/storage
+            - ./storage:/var/www/html/storage
 #            - .env:/var/www/html/.env
         environment:
             MAIL_MAILER: log
             MAIL_SCHEME: null
             MAIL_HOST: 192.168.152.6
-            MAIL_PORT: 25
-            MAIL_USERNAME: null
-            MAIL_PASSWORD: null
+            MAIL_PORT: 584
+            MAIL_USERNAME: noreply
+            MAIL_PASSWORD: s2fvLWxkCLkR
             MAIL_FROM_ADDRESS: "noreply@gkcdu.ru"
             MAIL_FROM_NAME: "${APP_NAME}"
         networks:
