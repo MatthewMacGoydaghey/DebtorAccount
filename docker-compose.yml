@@ -28,9 +28,9 @@ services:
         environment:
             MAIL_MAILER: log
             MAIL_SCHEME: null
-            MAIL_HOST: 192.168.152.6
+            MAIL_HOST: mail.gkcdu.ru
             MAIL_PORT: 587
-#            MAIL_ENCRYPTION: tls
+            MAIL_ENCRYPTION: tls
             MAIL_USERNAME: noreply
             MAIL_PASSWORD: s2fvLWxkCLkR
             MAIL_FROM_ADDRESS: "noreply@gkcdu.ru"
