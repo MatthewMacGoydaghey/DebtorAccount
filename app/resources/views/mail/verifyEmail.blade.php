@@ -1,3 +1,3 @@
 <h1>Подтверждение электронной почты</h1>
    <p>Для подтверждения нажать на ссылку ниже:</p>
-   <a href="{{ url('api/email_verify/' . $token . '?email=' . $email) }}">Подтвердить почту</a>
+   <a href="{{ url('api/auth/email_verify/' . $token . '?email=' . $email) }}">Подтвердить почту</a>
