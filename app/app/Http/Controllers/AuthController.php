@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\PasswordResetRequest;
 use App\Http\Requests\Auth\RegRequest;
 use App\Http\Requests\Auth\VerifyEmailRequest;
+use App\Http\Resources\Users\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -35,10 +36,10 @@ class AuthController extends Controller
     }
 
 
-    public function GetUserInfo(Request $request): array
+    public function GetUserInfo(Request $request): JsonResponse
     {
         $user = $request->user();
-        return ["name" => $user->name, "surname" => $user->surname, "patronymic" => $user->patronymic ?? null];
+        return response()->json(new UserResource($user));
     }
 
 
@@ -71,6 +72,7 @@ class AuthController extends Controller
     {
         $user = User::FindByField("email", $request->email);
         if ($user->VerifyEmail($request->token))
+        error_log("dsad");
         return response()->redirectTo(config("app.url") . "/email_verified");
 
         return response()->redirectTo(config("app.url") . "/email_not_verified");
