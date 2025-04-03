@@ -23,18 +23,10 @@ services:
         volumes:
 #            - .docker/php/php.ini:/usr/local/etc/php/php.ini
 #            - ./app:/var/www/html
-            - /home/deployer/debtor_lk/backend/storage:/var/www/html/storage
-#            - .env:/var/www/html/.env
-        environment:
-            MAIL_MAILER: log
-            MAIL_SCHEME: null
-            MAIL_HOST: 192.168.152.6
-            MAIL_PORT: 587
-#            MAIL_ENCRYPTION: tls
-            MAIL_USERNAME: noreply
-            MAIL_PASSWORD: s2fvLWxkCLkR
-            MAIL_FROM_ADDRESS: "noreply@gkcdu.ru"
-            MAIL_FROM_NAME: "${APP_NAME}"
+            - storage-php-dev:/var/www/html/storage
+#            - /home/deployer/debtor_lk/backend/.env:/var/www/html/.env
+#        environment:
+#            APP_ENV: development
         networks:
           - proxy
 
@@ -76,3 +68,5 @@ networks:
     proxy:
         driver: overlay
         external: true
+volumes:
+    storage-php-dev:
