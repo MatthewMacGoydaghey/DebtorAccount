@@ -22,7 +22,7 @@ abstract class Controller
             ]);
     }
 
-    protected function paginatedResponse(int $total, int $filtered, string $name, $result) {
+    protected function paginatedResponse(int $total, int $filtered, string $name, $result) : JsonResponse {
         return response()->json([
             'records_total' => $total,
             'records_filtered' => $filtered,
