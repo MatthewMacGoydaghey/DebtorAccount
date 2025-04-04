@@ -17,9 +17,9 @@ class LoanResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user->id,
-            'date_of_contract' => $this->date_of_contract->format('Y-m-d'),
+            'date_of_contract' => $this->date_of_contract,
             'lender' => $this->lender,
-            'contact_number' => $this->contact_number,
+            'contract_number' => $this->contract_number,
             'loan_amount' => $this->loan_amount,
             'total_outstanding_amount' => $this->total_outstanding_amount,
             'remaining_amount' => $this->remaining_amount,

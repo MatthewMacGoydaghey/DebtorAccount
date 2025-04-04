@@ -72,7 +72,6 @@ class AuthController extends Controller
     {
         $user = User::FindByField("email", $request->email);
         if ($user->VerifyEmail($request->token))
-        error_log("dsad");
         return response()->redirectTo(config("app.url") . "/email_verified");
 
         return response()->redirectTo(config("app.url") . "/email_not_verified");
