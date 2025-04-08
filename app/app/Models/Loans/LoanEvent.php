@@ -1,5 +1,3 @@
-php
-Copy
 <?php
 
 namespace App\Models;
