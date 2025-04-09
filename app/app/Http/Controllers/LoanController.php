@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Filters\Filter;
 use App\Http\Resources\Loans\LoanResource;
 use App\Models\Loans\Loan;
+use App\Models\Loans\LoanEventType;
 use App\Models\Loans\LoanStatuse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,5 +25,12 @@ class LoanController extends Controller
         $filter = new Filter($request, LoanStatuse::query(), ["name"]);
         $results = $filter->apply()->getResult();
         return $this->paginatedResponse($results['total'], $results['filtered'], "loan_statuses", $results['query']->get());
+    }
+
+    public function GetEventTypes(Request $request)
+    {
+        $filter = new Filter($request, LoanEventType::where('active', true), ["content"]);
+        $results = $filter->apply()->getResult();
+        return $this->paginatedResponse($results['total'], $results['filtered'], "loan_event_types", $results['query']->get());
     }
 }

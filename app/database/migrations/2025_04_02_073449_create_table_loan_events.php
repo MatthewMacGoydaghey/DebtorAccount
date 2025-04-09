@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('loan_events', function (Blueprint $table) {
             $table->id();
             $table->foreignId('loan_event_action_id')->constrained('loan_event_actions', 'id');
+            $table->foreignId('loan_event_type_id')->constrained('loan_event_types', 'id');
             $table->string('description');
             $table->timestamps();
         });
@@ -26,6 +27,7 @@ return new class extends Migration
     {
         Schema::table('loan_events', function (Blueprint $table) {
             $table->dropForeign(['loan_event_action_id']);
+            $table->dropForeign(['loan_event_type_id']);
         });
 
         Schema::dropIfExists('loan_events');

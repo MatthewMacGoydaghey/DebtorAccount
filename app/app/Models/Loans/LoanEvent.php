@@ -20,9 +20,6 @@ class LoanEvent extends Model
         'description'
     ];
 
-    /**
-     * Get the action associated with the loan event.
-     */
     public function action(): BelongsTo
     {
         return $this->belongsTo(LoanEventAction::class, 'loan_event_action_id');
