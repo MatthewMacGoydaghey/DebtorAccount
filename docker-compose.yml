@@ -1,68 +1,67 @@
 services:
-    nginx-dev:
-        image: nginx-dev
-        depends_on:
-           - php
-        labels:
-          - traefik.enable=true
-          - traefik.swarm.network=proxy
-        networks:
-          - proxy
-        deploy:
-          mode: replicated
-          replicas: 1
-          placement:
-            constraints:
-                - node.role == manager
-    php-dev:
-        image: php-dev
-#        build:
-#            context: .
-#            dockerfile: .docker/php-fpm/Dockerfile
-        volumes:
-#            - .docker/php/php.ini:/usr/local/etc/php/php.ini
-#            - ./app:/var/www/html
-            - storage-php-dev:/var/www/html/storage
-#            - /home/deployer/debtor_lk/backend/.env:/var/www/html/.env
-#        environment:
-#            APP_ENV: development
-        networks:
-          - proxy
+  nginx-dev:
+    image: nginx-dev
+    depends_on:
+      - php
+    labels:
+      - traefik.enable=true
+      - traefik.swarm.network=proxy
+    networks:
+      - proxy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
 
-    mariadb-dev:
-#        container_name: esia-develop-mariadb
-        image: mariadb-dev
-        ports:
-            - "3306:3306"
-        environment:
-            MARIADB_DATABASE: esia-database
-            MARIADB_USER: ${DB_USERNAME:-esia-local}
-            MARIADB_PASSWORD: ${DB_PASSWORD:-esia-local}
-            MARIADB_ROOT_PASSWORD: 'secret'
-            MARIADB_ROOT_HOST: "%"
-        volumes:
-            - /home/deployer/debtor_lk/backend/docker/mariadb/data:/var/lib/mysql
-        networks:
-          - proxy
-        deploy:
-            mode: replicated
-            replicas: 1
-            placement:
-                constraints:
-                - node.role == manager
-    redis-dev:
-        image: redis:latest
-#        container_name: esia-develop-redis
-        volumes:
-            - /home/deployer/debtor_lk/backend/docker/redis/data:/data
-        networks:
-          - proxy
-        deploy:
-            mode: replicated
-            replicas: 1
-            placement:
-                constraints:
-                - node.role == manager
+  php-dev:
+    image: php-dev
+    volumes:
+      - storage-php-dev:/var/www/html/storage
+    networks:
+      - proxy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  mariadb-dev:
+    image: mariadb-dev
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_DATABASE: esia-database
+      MARIADB_USER: ${DB_USERNAME:-esia-local}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-esia-local}
+      MARIADB_ROOT_PASSWORD: 'secret'
+      MARIADB_ROOT_HOST: "%"
+    volumes:
+      - /home/deployer/debtor_lk/backend/docker/mariadb/data:/var/lib/mysql
+    networks:
+      - proxy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+  redis-dev:
+    image: redis:latest
+    volumes:
+      - /home/deployer/debtor_lk/backend/docker/redis/data:/data
+    networks:
+      - proxy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
 networks:
     proxy:
         driver: overlay
