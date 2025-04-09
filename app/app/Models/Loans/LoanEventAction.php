@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Loans;
 
 use App\Models\Loans\LoanEventType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +18,7 @@ class LoanEventAction extends Model
      */
     protected $fillable = ['name'];
 
-    
+
     public function events(): HasMany
     {
         return $this->hasMany(LoanEvent::class);

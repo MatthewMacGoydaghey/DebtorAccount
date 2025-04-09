@@ -2,7 +2,6 @@
 
 namespace App\Models\Loans;
 
-use App\Models\LoanEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

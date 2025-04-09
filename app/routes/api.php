@@ -21,6 +21,7 @@ Route::prefix('/auth')->group(function ()
 
         Route::get("/loans", [LoanController::class, 'GetLoans']);
         Route::get("/loan_statuses", [LoanController::class, 'GetStatuses']);
+        Route::get("/loan_events", [LoanController::class, 'GetEvents']);
         Route::get("/loan_event_types", [LoanController::class, 'GetEventTypes']);
     });
     

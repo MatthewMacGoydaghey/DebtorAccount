@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LoanStatusesSeeder::class,
             LoanEventActionsSeeder::class,
-            EventTypeSeeder::class
+            LoanEventTypeSeeder::class
         ]);
 
     }
