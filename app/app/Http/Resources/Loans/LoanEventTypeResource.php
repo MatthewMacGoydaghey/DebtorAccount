@@ -16,10 +16,7 @@ class LoanEventTypeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'description' => $this->description,
-            'loan_event_action' => $this->action,
-            'loan_event_type' => $this->type,
-            'created_at' => $this->created_at
+            'content' => $this->content
        ];
 
     }

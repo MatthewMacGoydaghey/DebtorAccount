@@ -17,7 +17,7 @@ class LoanEventType extends Model
 
     public function event()
     {
-        return $this->hasOne(LoanEvent::class, 'id');
+        return $this->hasOne(LoanEvent::class);
     }
 
 }

@@ -30,16 +30,16 @@ class Loan extends Model
 
     public function events()
     {
-        return $this->hasMany(LoanEvent::class, 'id');
+        return $this->hasMany(LoanEvent::class, 'loan_id');
     }
 
     public function status()
     {
-        return $this->belongsTo(LoanStatuse::class, 'id');
+        return $this->belongsTo(LoanStatuse::class);
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class);
     }
 }
