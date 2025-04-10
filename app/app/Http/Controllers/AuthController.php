@@ -50,7 +50,7 @@ class AuthController extends Controller
     }
 
 
-    public function changePassword(ChangePasswordRequest $request): JsonResponse
+    public function ChangePassword(ChangePasswordRequest $request): JsonResponse
     {
         $user = $request->user();
         if (!$user->email_verified_at) abort(403, 'Email не подтверждён');
@@ -60,7 +60,7 @@ class AuthController extends Controller
     }
 
 
-    public function sendEmailVerification(VerifyEmailRequest $request): JsonResponse
+    public function SendEmailVerification(VerifyEmailRequest $request): JsonResponse
     {
         $user = User::FindByField("email", $request->email);
         $user->SentVerificationEmail(); 
@@ -68,7 +68,7 @@ class AuthController extends Controller
     }
 
 
-    public function verifyEmail(VerifyEmailRequest $request): RedirectResponse
+    public function VerifyEmail(VerifyEmailRequest $request): RedirectResponse
     {
         $user = User::FindByField("email", $request->email);
         if ($user->VerifyEmail($request->token))
@@ -78,14 +78,14 @@ class AuthController extends Controller
     }
 
 
-    public function sendPasswordResetEmail(Request $request): JsonResponse
+    public function SendPasswordResetEmail(Request $request): JsonResponse
     {
         $user = $request->user();
         $user->SendPasswordResetEmail();  
         return $this->jsonResponse(true, 'Письмо для сброса пароля отправлено');
     }
 
-    public function verifyPasswordReset(PasswordResetRequest $request)
+    public function VerifyPasswordReset(PasswordResetRequest $request)
     {
         $user = $request->user();
         if ($user->VerifyAndResetPassword($request->token, $request->password))
