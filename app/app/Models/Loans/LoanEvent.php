@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Loans;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,11 +20,18 @@ class LoanEvent extends Model
         'description'
     ];
 
-    /**
-     * Get the action associated with the loan event.
-     */
+    public function loan(): BelongsTo
+    {
+        return $this->belongsTo(Loan::class, 'id');
+    }
+
     public function action(): BelongsTo
     {
-        return $this->belongsTo(LoanEventAction::class, 'loan_event_action_id');
+        return $this->belongsTo(LoanEventAction::class, 'id');
+    }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(LoanEventType::class, 'id');
     }
 }

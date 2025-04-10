@@ -28,13 +28,18 @@ class Loan extends Model
     ];
 
 
+    public function events()
+    {
+        return $this->hasMany(LoanEvent::class, 'loan_id');
+    }
+
     public function status()
     {
-        return $this->belongsTo(LoanStatuse::class, 'loan_status_id');
+        return $this->belongsTo(LoanStatuse::class);
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

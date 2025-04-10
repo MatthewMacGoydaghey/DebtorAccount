@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loan_events', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('loan_event_action_id')->constrained('loan_event_actions', 'id');
-            $table->string('description');
+            $table->string('name');
+            $table->string('link');
+            $table->string('file_type');
+            $table->morphs('attachmentable');
             $table->timestamps();
         });
     }
@@ -24,10 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('loan_events', function (Blueprint $table) {
-            $table->dropForeign(['loan_event_action_id']);
-        });
-        
-        Schema::dropIfExists('loan_events');
+        Schema::dropIfExists('files');
     }
 };

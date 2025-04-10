@@ -12,20 +12,24 @@ Route::prefix('/auth')->group(function ()
     {
         Route::post("/logout", [AuthController::class, 'Logout']);
         Route::get("/me", [AuthController::class, 'GetUserInfo']);
-        Route::post('/change_password', [AuthController::class, 'changePassword']);
+        Route::post('/change_password', [AuthController::class, 'ChangePassword']);
 
         Route::prefix('reset_password')->group(function () {
-            Route::get('/', [AuthController::class, 'sendPasswordResetEmail']);
-            Route::post('/', [AuthController::class, 'verifyPasswordReset']);
+            Route::get('/', [AuthController::class, 'SendPasswordResetEmail']);
+            Route::post('/', [AuthController::class, 'VerifyPasswordReset']);
         });
 
-        Route::get("/loans", [LoanController::class, 'GetLoans']);
-        Route::get("/loan_statuses", [LoanController::class, 'GetStatuses']);
+        Route::prefix("loans")->group(function () {
+            Route::get("/", [LoanController::class, 'GetLoans']);
+            Route::get("/{id}/events", [LoanController::class, 'GetEvents']);
+            Route::get("/statuses", [LoanController::class, 'GetStatuses']);
+            Route::get("/event_types", [LoanController::class, 'GetEventTypes']);
+        });
     });
     
     Route::prefix('email_verify')->group(function () {
-        Route::get('/', [AuthController::class, 'sendEmailVerification']);
-        Route::get('/{token}', [AuthController::class, 'verifyEmail']);
+        Route::get('/', [AuthController::class, 'SendEmailVerification']);
+        Route::get('/{token}', [AuthController::class, 'VerifyEmail']);
     });
 });
 
