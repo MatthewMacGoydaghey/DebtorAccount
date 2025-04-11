@@ -22,16 +22,16 @@ class LoanEvent extends Model
 
     public function loan(): BelongsTo
     {
-        return $this->belongsTo(Loan::class, 'id');
+        return $this->belongsTo(Loan::class);
     }
 
     public function action(): BelongsTo
     {
-        return $this->belongsTo(LoanEventAction::class, 'id');
+        return $this->belongsTo(LoanEventAction::class, 'loan_event_action_id');
     }
 
     public function type(): BelongsTo
     {
-        return $this->belongsTo(LoanEventType::class, 'id');
+        return $this->belongsTo(LoanEventType::class, 'loan_event_type_id');
     }
 }

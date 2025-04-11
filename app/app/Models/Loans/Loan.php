@@ -2,9 +2,11 @@
 
 namespace App\Models\Loans;
 
+use App\Models\Payments\Payment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Loan extends Model
 {
@@ -27,15 +29,19 @@ class Loan extends Model
         'remaining_amount' => 'decimal:2',
     ];
 
-
-    public function events()
+    public function payments(): HasMany
     {
-        return $this->hasMany(LoanEvent::class, 'loan_id');
+        return $this->hasMany(Payment::class);
+    }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(LoanEvent::class);
     }
 
     public function status()
     {
-        return $this->belongsTo(LoanStatuse::class);
+        return $this->belongsTo(LoanStatuse::class, 'loan_status_id');
     }
 
     public function user()
