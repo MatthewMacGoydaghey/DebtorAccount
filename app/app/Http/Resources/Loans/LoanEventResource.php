@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources\Loans;
 
+use App\Http\Resources\Resource;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class LoanEventResource extends JsonResource
+class LoanEventResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -14,16 +14,24 @@ class LoanEventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if ($this->full)
         return [
             'id' => $this->id,
             'description' => $this->description,
+            'created_at' => $this->created_at,
             'loan_event_action' => $this->action,
             'loan_event_type' => [
                 "id" => $this->type->id,
                 "content" => $this->type->content
             ],
-            'created_at' => $this->created_at
        ];
 
+       return [
+        'id' => $this->id,
+        'description' => $this->description,
+        'loan_event_action_id' => $this->loan_event_action_id,
+        'loan_event_type_id' => $this->loan_event_type_id,
+        'created_at' => $this->created_at
+    ];
     }
 }

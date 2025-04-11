@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Filters\Filter;
 use App\Http\Resources\Loans\LoanEventResource;
 use App\Http\Resources\Loans\LoanEventTypeResource;
+use App\Http\Resources\Loans\LoanPaymentResource;
 use App\Http\Resources\Loans\LoanResource;
 use App\Http\Services\LoanService;
 use App\Models\Loans\Loan;
@@ -28,25 +29,55 @@ class LoanController extends Controller
         return $this->paginatedResponse($results['total'], $results['filtered'], "loans", LoanResource::collection($results['query']->orderBy('id', 'desc')->get()));
     }
 
-    public function GetStatuses(Request $request): JsonResponse
+    public function GetLoan(Request $request)
     {
-        $filter = new Filter($request, LoanStatuse::query(), ["name"]);
-        $results = $filter->apply()->getResult();
-        return $this->paginatedResponse($results['total'], $results['filtered'], "loan_statuses", $results['query']->get());
+        $loan = $this->loanService->GetLoan($request->loanId, $request->user());
+        return response()->json(new LoanResource($loan, true));
     }
+
 
     public function GetEvents(Request $request): JsonResponse
     {
-        $loan = $this->loanService->GetLoan($request->id, $request->user());
+        $loan = $this->loanService->GetLoan($request->loanId, $request->user());
         $filter = new Filter($request, $loan->events()->getQuery(), ["description"]);
         $results = $filter->apply()->getResult();
         return $this->paginatedResponse($results['total'], $results['filtered'], "loan_events", LoanEventResource::collection($results['query']->get()));
     }
+
+    public function GetEvent(Request $request)
+    {
+        $event = $this->loanService->GetEvent($request->eventId, $request->loanId, $request->user());
+        return response()->json(new LoanEventResource($event, true));
+    }
+
+
+    public function GetPayments(Request $request)
+    {
+        
+        $loan = $this->loanService->GetLoan($request->loanId, $request->user());
+        $filter = new Filter($request, $loan->payments()->getQuery(), ["payer_name"]);
+        $results = $filter->apply()->getResult();
+        return $this->paginatedResponse($results['total'], $results['filtered'], "loan_payments", LoanPaymentResource::collection($results['query']->get()));
+    }
+
+    public function GetPayment(Request $request)
+    {
+        $payment = $this->loanService->GetPayment($request->paymentId, $request->loanId, $request->user());
+        return response()->json(new LoanPaymentResource($payment));
+    }
+    
 
     public function GetEventTypes(Request $request)
     {
         $filter = new Filter($request, LoanEventType::where('active', true), ["content"]);
         $results = $filter->apply()->getResult();
         return $this->paginatedResponse($results['total'], $results['filtered'], "loan_event_types", LoanEventTypeResource::collection($results['query']->get()));
+    }
+
+    public function GetStatuses(Request $request): JsonResponse
+    {
+        $filter = new Filter($request, LoanStatuse::query(), ["name"]);
+        $results = $filter->apply()->getResult();
+        return $this->paginatedResponse($results['total'], $results['filtered'], "loan_statuses", $results['query']->get());
     }
 }
