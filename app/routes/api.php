@@ -15,7 +15,7 @@ Route::prefix('/auth')->group(function ()
         Route::post('/change_password', [AuthController::class, 'ChangePassword']);
 
         Route::prefix('reset_password')->group(function () {
-            Route::get('/', [AuthController::class, 'SendPasswordResetEmail']);
+            Route::get('/', [AuthController::class, 'SentPasswordResetEmail']);
             Route::post('/', [AuthController::class, 'VerifyPasswordReset']);
         });
 
