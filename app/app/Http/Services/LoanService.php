@@ -12,8 +12,13 @@ class LoanService
     public function GetLoan(int $loanId, User $user): Loan
     {
         $loan = Loan::find($loanId);
-        if (!$loan) throw new NotFoundHttpException("Задолженость не найдена");
-        if ($loan->user_id != $user->id) abort(403, "Недоступно");
+
+        if (!$loan)
+        throw new NotFoundHttpException("Задолженость не найдена");
+
+        if ($loan->user_id != $user->id)
+        abort(403, "Недоступно");
+
         return $loan;
     }
 
@@ -21,7 +26,10 @@ class LoanService
     {
         $loan = $this->GetLoan($loanId, $user);
         $event = $loan->events()->where('id', $eventId)->first();
-        if (!$event) throw new NotFoundHttpException("Событие не найдено");
+
+        if (!$event)
+        throw new NotFoundHttpException("Событие не найдено");
+
         return $event;
     }
 
@@ -29,7 +37,10 @@ class LoanService
     {
         $loan = $this->GetLoan($loanId, $user);
         $payment = $loan->payments->where('id', $paymentId)->first();
-        if (!$payment) throw new NotFoundHttpException("Платёж не найден");
+        
+        if (!$payment)
+        throw new NotFoundHttpException("Платёж не найден");
+
         return $payment;
     }
 }

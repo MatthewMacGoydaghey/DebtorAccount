@@ -21,13 +21,13 @@ Route::prefix('/auth')->group(function ()
 
         Route::prefix("loans")->group(function () {
             Route::get("/", [LoanController::class, 'GetLoans']);
+            Route::get("/statuses", [LoanController::class, 'GetStatuses']);
+            Route::get("/event_types", [LoanController::class, 'GetEventTypes']);
             Route::get("/{loanId}", [LoanController::class, 'GetLoan']);
             Route::get("/{loanId}/events", [LoanController::class, 'GetEvents']);
             Route::get("/{loanId}/events/{eventId}", [LoanController::class, 'GetEvent']);
             Route::get("/{loanId}/payments", [LoanController::class, 'GetPayments']);
             Route::get("/{loanId}/payments/{paymentId}", [LoanController::class, 'GetPayment']);
-            Route::get("/statuses", [LoanController::class, 'GetStatuses']);
-            Route::get("/event_types", [LoanController::class, 'GetEventTypes']);
         });
     });
     

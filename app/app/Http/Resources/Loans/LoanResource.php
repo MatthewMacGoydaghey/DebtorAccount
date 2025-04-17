@@ -38,7 +38,7 @@ class LoanResource extends Resource
             'loan_amount' => $this->loan_amount,
             'total_outstanding_amount' => $this->total_outstanding_amount,
             'remaining_amount' => $this->remaining_amount,
-            'loan_status_id' => $this->loan_status_id
+            'loan_status' => $this->status
        ];
 
     }
