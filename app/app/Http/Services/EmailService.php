@@ -8,16 +8,16 @@ use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EmailService
 {
 
-    public function SentVerificationEmail(User $user) : void
+    public function SendVerificationEmail(User $user) : void
     {
         if ($user->email_verified_at)
-        throw new BadRequestException("Почта уже подтверждена");
+        throw new BadRequestHttpException("Почта уже подтверждена");
     
         $token = Str::random(50);
         Cache::set($user->email, $token, 86400);

@@ -36,7 +36,7 @@ class AuthController extends Controller
     {
         $field = $request->email ? 'email' : 'phone';
         $user = $this->userService->FindUserByField($field, $request->email ?? $request->phone);
-        $user->ValidatePassword($request->password);
+        $this->passwordService->ValidatePassword($user, $request->password);
         return $this->JsonResponse(true, "Аутентификация успешна", $user->createToken("T")->plainTextToken);
     }
 
@@ -62,10 +62,10 @@ class AuthController extends Controller
     }
 
 
-    public function SentEmailVerification(VerifyEmailRequest $request): JsonResponse
+    public function SendEmailVerification(VerifyEmailRequest $request): JsonResponse
     {
         $user = $this->userService->FindUserByField("email", $request->email);
-        $this->emailService->SentVerificationEmail($user); 
+        $this->emailService->SendVerificationEmail($user); 
         return $this->JsonResponse(true, 'Письмо для верификации почты отправлено');
     }
 

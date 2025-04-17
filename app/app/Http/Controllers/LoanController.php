@@ -46,7 +46,7 @@ class LoanController extends Controller
         $results = $filter->apply()->getResult();
 
         return $this->PaginatedResponse($results['total'], $results['filtered'],
-        "loan_events", LoanEventResource::collection($results['query']->get()));
+        "loan_events", LoanEventResource::collection($results['query']->orderBy('id', 'desc')->get()));
     }
 
 
@@ -65,7 +65,7 @@ class LoanController extends Controller
         $results = $filter->apply()->getResult();
 
         return $this->PaginatedResponse($results['total'], $results['filtered'],
-        "loan_payments", LoanPaymentResource::collection($results['query']->get()));
+        "loan_payments", LoanPaymentResource::collection($results['query']->orderBy('id', 'desc')->get()));
     }
 
 
