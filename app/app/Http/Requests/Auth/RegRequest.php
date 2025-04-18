@@ -26,30 +26,12 @@ class RegRequest extends FormRequest
             "surname" => "required|string",
             "patronymic" => "nullable|string",
             "password" => "required|string|min:8",
-            "email" => "nullable|email|unique:users,email",
-            "phone" => ['nullable','string','regex:/^(\+7)?9\d{9}$/', 'unique:users,phone'],
-            "date_of_birth" => "required|date"
+            "date_of_birth" => "required|date",
+            "phone" => ['required','string','regex:/^(\+7)?9\d{9}$/'],
+            'sms_code' => "numeric"
         ];
     }
 
-
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator)
-        {
-        $request = $validator->getData();
-
-        if (empty($request['email']) && empty($request['phone']))
-        {
-            $validator->errors()->add('email|phone', 'Поле email или phone обязательно к заполнению');
-        }
-
-        if (!empty($request['email']) && !empty($request['phone']))
-        {
-            $validator->errors()->add('email|phone', 'Можно указать только одно из полей: email или phone');
-        }
-        });
-    }
 
     public function messages()
     {

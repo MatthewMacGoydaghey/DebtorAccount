@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\User;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserService
@@ -20,6 +21,11 @@ class UserService
 
     public function CreateUser(array $data): User
     {
+        $duplicate = User::query()->where('phone', $data['phone'])->first();
+
+        if ($duplicate)
+        throw new BadRequestHttpException("Пользователь уже существует");
+    
         return User::create($data);
     }
 }

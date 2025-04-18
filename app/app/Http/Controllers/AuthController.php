@@ -5,15 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\PasswordResetRequest;
+use App\Http\Requests\Auth\PhoneVerificationRequest;
 use App\Http\Requests\Auth\RegRequest;
 use App\Http\Requests\Auth\VerifyEmailRequest;
 use App\Http\Resources\Users\UserResource;
 use App\Http\Services\EmailService;
 use App\Http\Services\PasswordService;
 use App\Http\Services\UserService;
+use App\Http\Services\SMSService;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
@@ -22,13 +26,40 @@ class AuthController extends Controller
     protected UserService $userService,
     protected PasswordService $passwordService,
     protected EmailService $emailService,
+    protected SMSService $smsService,
     ) {}
 
 
     public function Register(RegRequest $request): JsonResponse
     {
-        $this->userService->CreateUser($request->validated());
-        return $this->JsonResponse(true, "Регистрация успешна");
+        if (!$request->sms_code)
+        {
+            $user = $this->userService->FindUserByField("phone", $request->phone);
+            return $user->isPhoneVerified()
+            ? $this->jsonResponse(true, "Пользователь уже зарегистрирован")
+            : $this->jsonResponse(true, "Пользователь найден, необходимо подтвердить номер телефона");
+        }
+
+        if ((int)$request->sms_code !== Cache::get($request->phone))
+        return $this->jsonResponse(false, 'SMS код неверный');
+
+        $user = $this->userService->CreateUser($request->validated());
+        $user->VerifyPhone();
+        return $this->JsonResponse(true, "Пользователь зарегистрирован");
+    }
+
+    public function SendPhoneVerificationCode(PhoneVerificationRequest $request): JsonResponse
+    {
+        $user = User::where("phone", $request->phone)->first();
+
+        if ($user && $user->isPhoneVerified())
+        return $this->jsonResponse(false, 'Этот номер телефона уже верифицирован');
+    
+        //$code = $this->smsService->GenerateCode();
+        //$this->smsService->SendSMS($request->phone, "Ваш код подтверждения: $code");
+        $code = 0000;
+        Cache::put($request->phone, $code, 300);
+        return $this->jsonResponse(true, 'SMS код отправлен');
     }
 
 
