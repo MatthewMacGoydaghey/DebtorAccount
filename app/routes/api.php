@@ -8,6 +8,7 @@ Route::prefix('/auth')->group(function ()
 {
     Route::post("/register", [AuthController::class, 'Register']);
     Route::post("/login", [AuthController::class, 'Login']);
+    Route::post("/phone_verification", [AuthController::class, 'SendPhoneVerificationCode']);
     Route::middleware('auth:sanctum')->group(function ()
     {
         Route::post("/logout", [AuthController::class, 'Logout']);

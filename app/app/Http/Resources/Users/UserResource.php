@@ -19,7 +19,8 @@ class UserResource extends JsonResource
             "surname" => $this->surname,
             "patronymic" => $this->patronymic ?? null,
             "inn" => $this->inn ?? null,
-            "snils" => $this->snils ?? null
+            "snils" => $this->snils ?? null,
+            "identified_at" => $this->identified_at ?? null
         ];
 
     }

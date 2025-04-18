@@ -60,4 +60,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(Loan::class);
     }
+
+
+    public function IsPhoneVerified(): bool
+    {
+        return (bool) $this->phone_verified_at;
+    }
+
+    public function VerifyPhone(): void
+    {
+        $this->phone_verified_at = now();
+        $this->save();
+    }
 }
