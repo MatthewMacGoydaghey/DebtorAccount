@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Http\DTO\Auth\RegUserDTO;
 use App\Models\User;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,13 +20,13 @@ class UserService
         return $foundUser;
     }
 
-    public function CreateUser(array $data): User
+    public function CreateUser(RegUserDTO $data): User
     {
-        $duplicate = User::query()->where('phone', $data['phone'])->first();
+        $duplicate = User::query()->where('phone', $data->phone)->first();
 
         if ($duplicate)
         throw new BadRequestHttpException("Пользователь уже существует");
     
-        return User::create($data);
+        return User::create((array)$data);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -17,7 +18,21 @@ class SMSService {
         $this->login = env('SMSC_LOGIN');
     }
 
-    public function SendSMS($phone, $message)
+    public function sendVerificationCode(string $phone): void
+    {
+        //$code = $this->generateCode();
+        //$this->sendSMS($phone, "Ваш код подтверждения: $code");
+        $code = 0000;
+        Cache::put($phone, $code, 300);
+    }
+
+    public function verifyCode(string $phone, string $code): bool
+    {
+        return (int)$code === Cache::get($phone);
+    }
+
+
+    private function SendSMS($phone, $message)
     {
         $password = $this->password;
         $login = $this->login;
@@ -36,7 +51,7 @@ class SMSService {
         }
     }
 
-    public function GenerateCode(): int
+    private function GenerateCode(): int
     {
         return rand(0000, 9999);
     }

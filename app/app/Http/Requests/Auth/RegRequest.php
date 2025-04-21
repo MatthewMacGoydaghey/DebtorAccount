@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Http\DTO\Auth\RegUserDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegRequest extends FormRequest
@@ -28,7 +29,7 @@ class RegRequest extends FormRequest
             "password" => "required|string|min:8",
             "date_of_birth" => "required|date",
             "phone" => ['required','string','regex:/^(\+7)?9\d{9}$/'],
-            'sms_code' => "numeric"
+            'sms_code' => "nullable|numeric"
         ];
     }
 
@@ -38,5 +39,18 @@ class RegRequest extends FormRequest
         return [
             'phone.regex' => 'Неверный формат номера телефона. Верный формат: +7##########'
         ];
+    }
+
+    public function toDTO(): RegUserDTO
+    {
+        return new RegUserDTO(
+            phone: $this->input('phone'),
+            sms_code: $this->input('sms_code'),
+            name: $this->input('name'),
+            surname: $this->input('surname'),
+            patronymic: $this->input('patronymic'),
+            date_of_birth: $this->input('date_of_birth'),
+            password: $this->input('password'),
+        );
     }
 }
